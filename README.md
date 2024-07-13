@@ -43,6 +43,7 @@ export $(xargs < ${loanengine_path}/credentials/dev.env)
     Description: Create a new loan with the initial state proposed.
     Request Body:
         {
+            "id": 1,
             "borrower_id": 1,
             "principal_amount": 10000,
             "rate": 5.0,

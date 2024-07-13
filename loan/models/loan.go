@@ -10,13 +10,13 @@ const (
 )
 
 type Loan struct {
-	ID              int        `json:"id"`
-	BorrowerID      int        `json:"borrower_id"`
-	PrincipalAmount float64    `json:"principal_amount"`
-	Rate            float64    `json:"rate"`
-	ROI             float64    `json:"roi"`
+	ID              int        `json:"id" binding:"required"`
+	BorrowerID      int        `json:"borrower_id" binding:"required"`
+	PrincipalAmount float64    `json:"principal_amount" binding:"required"`
+	Rate            float64    `json:"rate" binding:"required"`
+	ROI             float64    `json:"roi" binding:"required"`
 	AgreementLink   string     `json:"agreement_link"`
-	State           LoanState  `json:"state"`
+	State           LoanState  `json:"state" binding:"required"`
 	Investments     []Investor `json:"investments"`
 }
 
