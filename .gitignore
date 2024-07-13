@@ -1,0 +1,24 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+# compiled binary
+bin/*
+# credential files
+credentials/*
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# ide config files
+*.iml
+*.xml
+*.tmp
+*.svg
+.DS_Store
+__debug_bin
+*.log
