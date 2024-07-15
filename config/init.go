@@ -30,7 +30,7 @@ func init() {
 	if Environment == "dev" {
 		Domain = "localhost"
 	}
-	// for pdf generation path
+	// for app path
 	AppPath = os.Getenv("loanengine_path")
 }
 
