@@ -2,8 +2,10 @@ package main
 
 import (
 	"loanEngine/common"
+	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	ginprometheus "github.com/zsais/go-gin-prometheus"
 )
 
@@ -19,6 +21,11 @@ func init() {
 	mainRouter.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
 	// mainRouter.Use(common.Middleware) // extract common meta info
 	AddLoanRoutes(mainRouter)
 }

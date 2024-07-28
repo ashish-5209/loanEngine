@@ -79,6 +79,10 @@ func (s *loanService) InvestLoan(id int, investment *models.Investment) error {
 
 // SendEmail sends an email using Mailgun
 func SendEmail(to []string, subject, body string) {
+	mailgunDomain := os.Getenv("MAILGUN_DOMAIN")
+	mailgunAPIKey := os.Getenv("MAILGUN_API_KEY")
+	mailgunSender := os.Getenv("MAILGUN_SENDER")
+	fmt.Println("mailgun", mailgunAPIKey, mailgunDomain, mailgunSender)
 	mg := mailgun.NewMailgun(mailgunDomain, mailgunAPIKey)
 
 	message := mg.NewMessage(
