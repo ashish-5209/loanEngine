@@ -4,6 +4,7 @@ import (
 	"loanEngine/common"
 	"loanEngine/docs"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -37,7 +38,11 @@ func init() {
 	AddLoanRoutes(mainRouter)
 }
 func main() {
-	err := mainRouter.Run(":5002")
+	appPort := os.Getenv("APP_PORT")
+	if appPort == "" {
+		log.Fatal("APP_PORT environment variable not set")
+	}
+	err := mainRouter.Run(":" + appPort)
 	if err != nil {
 		common.CriticalLogger.Fatal("Failed to start server: ", err)
 	}
