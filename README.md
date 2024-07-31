@@ -38,6 +38,8 @@ export $(xargs < ${loanengine_path}/credentials/dev.env)
 <br/>
 
 ## API Endpoints
+Open Swagger
+http://localhost:5002/swagger/index.html
 1. Create Loan
     Endpoint: POST /api/v1/loans/
     Description: Create a new loan with the initial state proposed.

@@ -2,10 +2,13 @@ package main
 
 import (
 	"loanEngine/common"
+	"loanEngine/docs"
 	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	ginprometheus "github.com/zsais/go-gin-prometheus"
 )
 
@@ -26,6 +29,10 @@ func init() {
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
+	// Setup Swagger
+	docs.SwaggerInfo.BasePath = "/api/v1"
+	mainRouter.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	// mainRouter.Use(common.Middleware) // extract common meta info
 	AddLoanRoutes(mainRouter)
 }

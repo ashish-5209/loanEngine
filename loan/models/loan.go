@@ -42,3 +42,8 @@ type Investor struct {
 type Investment struct {
 	Investors []Investor `json:"investors"`
 }
+
+// ErrorResponse represents a standard error response format
+type ErrorResponse struct {
+	Error string `json:"error"`
+}

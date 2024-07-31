@@ -20,6 +20,16 @@ func NewLoanController(service loanService.LoanService) *LoanController {
 	return &LoanController{LoanService: service}
 }
 
+// @Summary Create a new loan
+// @Description Create a new loan with the provided details
+// @Tags loans
+// @Accept json
+// @Produce json
+// @Param loan body models.Loan true "Loan"
+// @Success 201 {object} models.Loan
+// @Failure 400 {object} models.ErrorResponse "Invalid request"
+// @Failure 500 {object} models.ErrorResponse "Internal server error"
+// @Router /loans [post]
 func (lc *LoanController) CreateLoan(c *gin.Context) {
 	common.Logger.Info("CreateLoan-Started")
 	defer common.Logger.Info("CreateLoan-End")
@@ -37,6 +47,17 @@ func (lc *LoanController) CreateLoan(c *gin.Context) {
 	utils.RespondWithSuccess(c, http.StatusCreated, "Loan created successfully")
 }
 
+// @Summary Approve a loan
+// @Description Approve a loan by its ID
+// @Tags loans
+// @Accept json
+// @Produce json
+// @Param id path int true "Loan ID"
+// @Param approval body models.Approval true "Approval Details"
+// @Success 200 {string} string "Loan approved successfully"
+// @Failure 400 {object} models.ErrorResponse "Invalid request"
+// @Failure 500 {object} models.ErrorResponse "Internal server error"
+// @Router /loans/{id}/approve [put]
 func (lc *LoanController) ApproveLoan(c *gin.Context) {
 	common.Logger.Info("ApproveLoan-Started")
 	defer common.Logger.Info("ApproveLoan-End")
@@ -55,6 +76,17 @@ func (lc *LoanController) ApproveLoan(c *gin.Context) {
 	utils.RespondWithSuccess(c, http.StatusOK, "Loan approved successfully")
 }
 
+// @Summary Invest in a loan
+// @Description Add investment to a loan
+// @Tags loans
+// @Accept json
+// @Produce json
+// @Param id path int true "Loan ID"
+// @Param investment body models.Investment true "Investment Details"
+// @Success 200 {string} string "Investment added successfully"
+// @Failure 400 {object} models.ErrorResponse "Invalid request"
+// @Failure 500 {object} models.ErrorResponse "Internal server error"
+// @Router /loans/{id}/invest [put]
 func (lc *LoanController) InvestLoan(c *gin.Context) {
 	common.Logger.Info("InvestLoan-Started")
 	defer common.Logger.Info("InvestLoan-End")
@@ -73,6 +105,17 @@ func (lc *LoanController) InvestLoan(c *gin.Context) {
 	utils.RespondWithSuccess(c, http.StatusOK, "Investment added successfully")
 }
 
+// @Summary Disburse a loan
+// @Description Disburse a loan by its ID
+// @Tags loans
+// @Accept json
+// @Produce json
+// @Param id path int true "Loan ID"
+// @Param disbursement body models.Disbursement true "Disbursement Details"
+// @Success 200 {string} string "Loan disbursed successfully"
+// @Failure 400 {object} models.ErrorResponse "Invalid request"
+// @Failure 500 {object} models.ErrorResponse "Internal server error"
+// @Router /loans/{id}/disburse [put]
 func (lc *LoanController) DisburseLoan(c *gin.Context) {
 	common.Logger.Info("DisburseLoan-Started")
 	defer common.Logger.Info("DisburseLoan-End")

@@ -1,0 +1,227 @@
+definitions:
+  models.Approval:
+    properties:
+      approval_date:
+        type: string
+      employee_id:
+        type: integer
+      picture_proof:
+        type: string
+    required:
+    - approval_date
+    - employee_id
+    - picture_proof
+    type: object
+  models.Disbursement:
+    properties:
+      agreement_letter:
+        type: string
+      disbursement_date:
+        type: string
+      employee_id:
+        type: integer
+    required:
+    - agreement_letter
+    - disbursement_date
+    - employee_id
+    type: object
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  models.Investment:
+    properties:
+      investors:
+        items:
+          $ref: '#/definitions/models.Investor'
+        type: array
+    type: object
+  models.Investor:
+    properties:
+      amount:
+        type: number
+      email:
+        type: string
+      id:
+        type: integer
+    type: object
+  models.Loan:
+    properties:
+      agreement_link:
+        type: string
+      borrower_id:
+        type: integer
+      id:
+        type: integer
+      investments:
+        items:
+          $ref: '#/definitions/models.Investor'
+        type: array
+      principal_amount:
+        type: number
+      rate:
+        type: number
+      roi:
+        type: number
+      state:
+        $ref: '#/definitions/models.LoanState'
+    required:
+    - borrower_id
+    - id
+    - principal_amount
+    - rate
+    - roi
+    - state
+    type: object
+  models.LoanState:
+    enum:
+    - proposed
+    - approved
+    - invested
+    - disbursed
+    type: string
+    x-enum-varnames:
+    - Proposed
+    - Approved
+    - Invested
+    - Disbursed
+info:
+  contact: {}
+paths:
+  /loans:
+    post:
+      consumes:
+      - application/json
+      description: Create a new loan with the provided details
+      parameters:
+      - description: Loan
+        in: body
+        name: loan
+        required: true
+        schema:
+          $ref: '#/definitions/models.Loan'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Loan'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Create a new loan
+      tags:
+      - loans
+  /loans/{id}/approve:
+    put:
+      consumes:
+      - application/json
+      description: Approve a loan by its ID
+      parameters:
+      - description: Loan ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Approval Details
+        in: body
+        name: approval
+        required: true
+        schema:
+          $ref: '#/definitions/models.Approval'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Loan approved successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Approve a loan
+      tags:
+      - loans
+  /loans/{id}/disburse:
+    put:
+      consumes:
+      - application/json
+      description: Disburse a loan by its ID
+      parameters:
+      - description: Loan ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Disbursement Details
+        in: body
+        name: disbursement
+        required: true
+        schema:
+          $ref: '#/definitions/models.Disbursement'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Loan disbursed successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Disburse a loan
+      tags:
+      - loans
+  /loans/{id}/invest:
+    put:
+      consumes:
+      - application/json
+      description: Add investment to a loan
+      parameters:
+      - description: Loan ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Investment Details
+        in: body
+        name: investment
+        required: true
+        schema:
+          $ref: '#/definitions/models.Investment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Investment added successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Invest in a loan
+      tags:
+      - loans
+swagger: "2.0"
